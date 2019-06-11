@@ -7,7 +7,6 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { UserComponent } from './user/user.component';
 import { ProjectComponent } from './project/project.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +14,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     AddTaskComponent,
     ViewTaskComponent,
     UserComponent,
-    ProjectComponent,
-    WelcomeComponent
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

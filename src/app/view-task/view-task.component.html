@@ -2,20 +2,21 @@
   <div class="card-body">
       <!-- <div class="container"> -->
       <div class="row">
-            <div class="col-md-1">Project:</div>
+            <div class="col-md-1"> Project: </div>
             <div class="col-md-4">
               <input class="form-control" placeholder="Enter Project name">
             </div>
-            <button class="btn btn-outline-success btn-space col-md-1">Search</button>
-            <div class="col-md-2 text-right">Sort Task By:</div>
-            <button class="btn btn-secondary btn-space">Start Date</button>
-            <button class="btn btn-secondary btn-space">End Date</button>
-            <button class="btn btn-secondary btn-space">Priority</button>
-            <button class="btn btn-secondary btn-space">Completed</button>
+            <button class="btn btn-outline-success btn-space col-md-1"> Search </button>
+            <div class="col-md-2 text-right"> Sort Task By: </div>
+            <button class="btn btn-secondary btn-space"> Start Date </button>
+            <button class="btn btn-secondary btn-space"> End Date </button>
+            <button class="btn btn-secondary btn-space"> Priority </button>
+            <button class="btn btn-secondary btn-space"> Completed </button>
       </div>
-      <br>
-      <div class="row"></div>
-      <div class='table-responsive'>
+
+      <hr>
+
+      <!-- <div class='table-responsive'>
           <table class='table'>
             <thead>
               <tr>
@@ -44,6 +45,34 @@
                 </tr>
             </tbody>
           </table>
+        </div> -->
+
+        <div class="col-sm-12 container">
+            <ul class="list-unstyled row">
+              <li class="list-item col-sm-4 p-2 font-weight-bold"> Task </li>
+              <li class="list-item col-sm-3 p-2 font-weight-bold"> Parent </li>
+              <li class="list-item col-sm-1 p-2 font-weight-bold"> Priority </li>
+              <li class="list-item col-sm-1 p-2 font-weight-bold"> Start </li>
+              <li class="list-item col-sm-1 p-2 font-weight-bold"> End </li>
+              <li class="list-item col-sm-1 p-2"></li>
+              <li class="list-item col-sm-1 p-2"></li>
+            </ul>
+        </div>
+        <hr>
+        <div class="col-sm-12 container">
+            <ul class="list-unstyled row">
+              <li class="list-item col-sm-4 p-2"> Task </li>
+              <li class="list-item col-sm-3 p-2"> Parent </li>
+              <li class="list-item col-sm-1 p-2"> Priority </li>
+              <li class="list-item col-sm-1 p-2"> Start </li>
+              <li class="list-item col-sm-1 p-2"> End </li>
+              <li class="list-item col-sm-1 p-2">
+                <button class="btn btn-success"> Edit </button>
+              </li>
+              <li class="list-item col-sm-1 p-2">
+                <button class="btn btn-warning"> Delete </button>
+              </li>
+            </ul>
         </div>
   </div>
 </div>

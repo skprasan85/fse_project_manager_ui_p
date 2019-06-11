@@ -1,3 +1,81 @@
-<p>
-  add-task works!
-</p>
+<div class='card'>
+    <div class="card-body">
+        <div class="container">
+            <form action="/action_page.php">
+
+              <div class="form-group row">
+                  <label class="col-form-label col-sm-2"> Project: </label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Enter / Search Project name" name="projectSearch">
+                      <div class="input-group-btn">
+                            <button type="submit" class="btn btn-outline-success"> Search </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="task"> Task: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="task" placeholder="Enter task name" name="task">
+                </div>
+              </div>
+
+              <div class="form-group row">        
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="setParentTask"> Parent Task </label>
+                  </div>
+              </div>
+
+              <div class="slidecontainer">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label"> Priority: </label>
+                  <input type="range" min="1" max="30" value="0" class="slider" id="myRange">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-form-label col-sm-2"> Parent Task: </label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Enter / Search Parent Task name" name="parentSearch">
+                      <div class="input-group-btn">
+                            <button type="submit" class="btn btn-outline-success"> Search </button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="input-group">
+                    <label class="col-form-label  col-sm-2"> Start Date: </label>
+                    <input type="text" class="form-control col-sm-4" placeholder="Start Date" name="startDate">
+                    <label class="col-form-label col-sm-2"> End Date: </label>
+                    <input type="text" class="form-control col-sm-4" placeholder="End Date" name="endDate">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-form-label col-sm-2"> User: </label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter / Search User name" name="userSearch">
+                    <div class="input-group-btn">
+                          <button type="submit" class="btn btn-outline-success"> Search </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success btn-space"> Add Task </button>
+                  <button type="reset" class="btn btn-warning btn-space"> Reset </button>
+                </div>
+              </div>
+
+           </form>
+        </div>
+    </div>
+  </div>
