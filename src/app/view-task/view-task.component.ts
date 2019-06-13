@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-task',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewTaskComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) {
+    
+  }
 
   ngOnInit() {
+  }
+
+  updateTask(): void {
+    this.router.navigate(['/updateTask'])
   }
 
 }
