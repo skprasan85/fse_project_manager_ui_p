@@ -28,9 +28,9 @@
               </div>
 
               <div class="form-group row">
-                <div class="text-center">
-                  <button type="submit" class="btn btn-success btn-space"> Add </button>
-                  <button type="reset" class="btn btn-warning btn-space"> Reset </button>
+                <div class="col-sm-12 text-center">
+                  <button type="reset" class="btn btn-warning btn-space float-right"> Reset </button>
+                  <button type="submit" class="btn btn-success btn-space float-right"> Add </button>
                 </div>
               </div>
 
@@ -52,16 +52,19 @@
         <br>
 
         <div class="col-sm-8 container">
-            <ul class="list-unstyled row">
-              <li class="list-item col-sm-6 p-1">Test</li>
-              <li class="list-item col-sm-2 p-1">
+            <ul class="list-unstyled row" *ngFor = 'let user of users'>
+              <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">First Name :</li>
+              <li class="list-item col-sm-6 p-1 bg-light">{{ user.firstName }}</li>
+              <li class="list-item col-sm-3 p-1">
                 <button class="btn btn-success"> Edit </button>
               </li>
-              <li class="list-item col-sm-6 p-1">Test</li>
-              <li class="list-item col-sm-2 p-1">
+              <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Last Name :</li>
+              <li class="list-item col-sm-6 p-1 bg-light">{{ user.lastName }}</li>
+              <li class="list-item col-sm-3 p-1">
                 <button class="btn btn-warning"> Delete </button>
               </li>
-              <li class="list-item col-sm-6 p-1">Test</li>
+              <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Employee Id :</li>
+              <li class="list-item col-sm-6 p-1 bg-light">{{ user.employeeId }}</li>
             </ul>
         </div>
 

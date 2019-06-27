@@ -2,39 +2,39 @@
   <div class="card-body">
       <!-- <div class="container"> -->
       <div class="row">
-            <div class="col-md-1"> Project: </div>
-            <div class="col-md-4">
+            <div class="col-sm-1"> Project: </div>
+            <div class="col-sm-4">
               <input class="form-control" placeholder="Enter Project name">
             </div>
-            <button class="btn btn-outline-success btn-space col-md-1"> Search </button>
-            <div class="col-md-2 text-right"> Sort Task By: </div>
-            <button class="btn btn-secondary btn-space"> Start Date </button>
-            <button class="btn btn-secondary btn-space"> End Date </button>
-            <button class="btn btn-secondary btn-space"> Priority </button>
-            <button class="btn btn-secondary btn-space"> Completed </button>
+            <button class="btn btn-sm btn-outline-success col-sm-1"> Search </button>
+            <div class="col-sm-2 text-right"> Sort Task By: </div>
+            <button class="btn btn-sm btn-secondary btn-space"> Start Date </button>
+            <button class="btn btn-sm btn-secondary btn-space"> End Date </button>
+            <button class="btn btn-sm btn-secondary btn-space"> Priority </button>
+            <button class="btn btn-sm btn-secondary btn-space"> Completed </button>
       </div>
 
       <hr>
 
       <div class="col-sm-12 container">
         <ul class="list-unstyled row">
-           <li class="list-item col-sm-4 p-2 font-weight-bold"> Task </li>
-           <li class="list-item col-sm-3 p-2 font-weight-bold"> Parent </li>
-           <li class="list-item col-sm-1 p-2 font-weight-bold"> Priority </li>
-           <li class="list-item col-sm-1 p-2 font-weight-bold"> Start </li>
-           <li class="list-item col-sm-1 p-2 font-weight-bold"> End </li>
+           <li class="list-item col-sm-3 p-2 font-weight-bold"> Task </li>
+           <li class="list-item col-sm-2 p-2 font-weight-bold"> Parent </li>
+           <li class="list-item col-sm-1 p-2 font-weight-bold text-center"> Priority </li>
+           <li class="list-item col-sm-2 p-2 font-weight-bold text-center"> Start </li>
+           <li class="list-item col-sm-2 p-2 font-weight-bold text-center"> End </li>
            <li class="list-item col-sm-1 p-2"></li>
            <li class="list-item col-sm-1 p-2"></li>
         </ul>
       </div>
       <hr>
       <div class="col-sm-12 container">
-        <ul class="list-unstyled row">
-           <li class="list-item col-sm-4 p-2"> Task </li>
-           <li class="list-item col-sm-3 p-2"> Parent </li>
-           <li class="list-item col-sm-1 p-2"> Priority </li>
-           <li class="list-item col-sm-1 p-2"> Start </li>
-           <li class="list-item col-sm-1 p-2"> End </li>
+        <ul class="list-unstyled row" *ngFor = 'let viewTask of viewTasks'>
+           <li class="list-item col-sm-3 p-2 bg-light">{{ viewTask.task }}</li>
+           <li class="list-item col-sm-2 p-2 bg-light">{{ viewTask.parentTask }}</li>
+           <li class="list-item col-sm-1 p-2 text-center">{{ viewTask.priority }}</li>
+           <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.startDate | date:'MM/dd/yyyy' }}</li>
+           <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.endDate | date:'MM/dd/yyyy' }}</li>
            <li class="list-item col-sm-1 p-2">
               <button class="btn btn-success" (click)='updateTask()'> Edit </button>
            </li>

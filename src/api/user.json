@@ -1,0 +1,23 @@
+[
+    {
+        "userId": 1,
+        "firstName": "Sachin",
+        "lastName": "Tendulkar",
+        "employeeId": 100,
+        "manager": false
+    },
+    {
+        "userId": 2,
+        "firstName": "Cristiano",
+        "lastName": "Ronaldo",
+        "employeeId": 200,
+        "manager": true
+    },
+    {
+        "userId": 3,
+        "firstName": "Bret",
+        "lastName": "Lee",
+        "employeeId": 300,
+        "manager": false
+    }
+]
