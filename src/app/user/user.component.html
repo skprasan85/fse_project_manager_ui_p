@@ -41,18 +41,19 @@
 
         <div class="container">
           <div class="form-group row">
-              <input type="text" class="form-control col-sm-4" id="searchUser" placeholder="Search User">
+              <input type="text" class="form-control col-sm-4" id="searchUser" placeholder="Search By User Name"
+                    [(ngModel)]='userFilter'>
               <div class="col-sm-1">Sort By:</div>
-              <button class="btn btn-secondary btn-space btn-sm"> First Name </button>
-              <button class="btn btn-secondary btn-space btn-sm"> Last Name </button>
-              <button class="btn btn-secondary btn-space btn-sm"> ID </button>
+              <button class="btn btn-secondary btn-space btn-sm" (click)='sortByFirst()'> First Name {{ sortOrder ? ' v' : ' ^' }}</button>
+              <button class="btn btn-secondary btn-space btn-sm" (click)='sortByLast()'> Last Name {{ sortOrder ? ' v' : ' ^' }}</button>
+              <button class="btn btn-secondary btn-space btn-sm" (click)='sortById()'> ID {{ sortOrder ? ' v' : ' ^' }}</button>
           </div>
         </div>
 
         <br>
 
         <div class="col-sm-8 container">
-            <ul class="list-unstyled row" *ngFor = 'let user of users'>
+            <ul class="list-unstyled row" *ngFor = 'let user of filteredUsers'>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">First Name :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.firstName }}</li>
               <li class="list-item col-sm-3 p-1">
@@ -65,6 +66,7 @@
               </li>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Employee Id :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.employeeId }}</li>
+              <br>
             </ul>
         </div>
 

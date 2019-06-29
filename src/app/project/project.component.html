@@ -52,21 +52,22 @@
         <hr>
 
         <div class="form-group">
-            <input type="text" class="form-control" id="searchProject" placeholder="Search Project">
+            <input type="text" class="form-control" id="searchProject" placeholder="Search By Project Name"
+                    [(ngModel)]='projectFilter'>
         </div>
 
         <div class="row">
             <div class="col-sm-1"> Sort By: </div>
-            <button class="btn btn-secondary btn-space btn-sm"> Start Date </button>
-            <button class="btn btn-secondary btn-space btn-sm"> End Date </button>
-            <button class="btn btn-secondary btn-space btn-sm"> Priority </button>
-            <button class="btn btn-secondary btn-space btn-sm"> Completed </button>
+            <button class="btn btn-secondary btn-space btn-sm" (click)='sortByStart()'> Start Date {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-secondary btn-space btn-sm" (click)='sortByEnd()'> End Date {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-secondary btn-space btn-sm" (click)='sortByPriority()'> Priority {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-secondary btn-space btn-sm" (click)='sortByCompleted()'> Completed {{ sortOrder ? ' v' : ' ^' }}</button>
         </div>
 
         <br>
 
         <div class="col-sm-12 container">
-            <ul class="list-unstyled row" *ngFor = 'let project of projects'>
+            <ul class="list-unstyled row" *ngFor = 'let project of filteredProjects'>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Project :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ project.project }}</li>
               <li class="list-item col-sm-2 p-1 font-weight-bold text-center">Priority</li>
@@ -88,6 +89,7 @@
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">End Date :</li>
               <li class="list-item col-sm-2 p-1 bg-light">{{ project.projectEndDate | date:'MM/dd/yyyy' }}</li>
               <li class="list-item col-sm-2 p-1 col-sm-offset-2 text-center"> </li>
+              <br>
             </ul>
         </div>
 

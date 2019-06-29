@@ -11,8 +11,20 @@ import { AppService } from '../app.service';
 })
 export class ViewTaskComponent implements OnInit {
 
+  filteredViewTasks: IViewTask[];
   viewTasks: IViewTask[] = [];
   errorMessage: string;
+  sortOrder: boolean = false;
+
+  _viewTaskFilter: string;
+
+  get viewTaskFilter(): string {
+    return this._viewTaskFilter;
+  }
+  set viewTaskFilter(value: string) {
+    this._viewTaskFilter = value;
+    this.filteredViewTasks = this.viewTaskFilter ? this.performFilter(this.viewTaskFilter) : this.viewTasks;
+  }
 
   constructor(private router: Router,
               private appService: AppService) {
@@ -23,6 +35,7 @@ export class ViewTaskComponent implements OnInit {
     this.appService.getViewTask().subscribe(
       viewTasks => {
         this.viewTasks = viewTasks;
+        this.filteredViewTasks = this.viewTasks;
       },
       error => this.errorMessage = <any>error
     );
@@ -30,6 +43,48 @@ export class ViewTaskComponent implements OnInit {
 
   updateTask(): void {
     this.router.navigate(['/updateTask'])
+  }
+
+  performFilter(filterBy: string) : IViewTask[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.viewTasks.filter((viewTask: IViewTask) => 
+      viewTask.task.toLocaleLowerCase().indexOf(filterBy) !== -1);
+  }
+
+  sortByStart(){
+    if(this.sortOrder)
+      this.filteredViewTasks.sort((a,b) => { return <any> new Date(a.startDate) - <any> new Date(b.startDate)} );
+    else
+    this.filteredViewTasks.sort((a,b) => { return <any> new Date(b.startDate) - <any> new Date(a.startDate)} );
+    
+    this.sortOrder = !this.sortOrder;
+  }
+
+  sortByEnd(){
+    if(this.sortOrder)
+      this.filteredViewTasks.sort((a,b) => { return <any> new Date(a.endDate) - <any> new Date(b.endDate)} );
+    else
+    this.filteredViewTasks.sort((a,b) => { return <any> new Date(b.endDate) - <any> new Date(a.endDate)} );
+    
+    this.sortOrder = !this.sortOrder;
+  }
+
+  sortByPriority(){
+    if(this.sortOrder)
+      this.filteredViewTasks.sort((a,b) => a.priority - b.priority);
+    else
+      this.filteredViewTasks.sort((a,b) => b.priority - a.priority);
+    
+    this.sortOrder = !this.sortOrder;
+  }
+
+  sortByTask(){
+    if(this.sortOrder)
+      this.filteredViewTasks.sort((a,b) => a.task.localeCompare(b.task));
+    else
+      this.filteredViewTasks.sort((a,b) => b.task.localeCompare(a.task));
+    
+    this.sortOrder = !this.sortOrder;
   }
 
 }

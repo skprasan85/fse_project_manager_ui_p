@@ -4,14 +4,19 @@
       <div class="row">
             <div class="col-sm-1"> Project: </div>
             <div class="col-sm-4">
-              <input class="form-control" placeholder="Enter Project name">
+              <input class="form-control" type="text" placeholder="Enter Project name">
             </div>
             <button class="btn btn-sm btn-outline-success col-sm-1"> Search </button>
             <div class="col-sm-2 text-right"> Sort Task By: </div>
-            <button class="btn btn-sm btn-secondary btn-space"> Start Date </button>
-            <button class="btn btn-sm btn-secondary btn-space"> End Date </button>
-            <button class="btn btn-sm btn-secondary btn-space"> Priority </button>
-            <button class="btn btn-sm btn-secondary btn-space"> Completed </button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByStart()'> Start Date {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByEnd()'> End Date {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByPriority()'> Priority {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByTask()'> Task {{ sortOrder ? ' v' : ' ^' }}</button>
+      </div>
+      <br>
+      <div class="form-group">
+          <input type="text" class="form-control" id="searchTask" placeholder="Search By Task Name"
+                  [(ngModel)]='viewTaskFilter'>
       </div>
 
       <hr>
@@ -29,7 +34,7 @@
       </div>
       <hr>
       <div class="col-sm-12 container">
-        <ul class="list-unstyled row" *ngFor = 'let viewTask of viewTasks'>
+        <ul class="list-unstyled row" *ngFor = 'let viewTask of filteredViewTasks'>
            <li class="list-item col-sm-3 p-2 bg-light">{{ viewTask.task }}</li>
            <li class="list-item col-sm-2 p-2 bg-light">{{ viewTask.parentTask }}</li>
            <li class="list-item col-sm-1 p-2 text-center">{{ viewTask.priority }}</li>
@@ -41,6 +46,7 @@
            <li class="list-item col-sm-1 p-2">
               <button class="btn btn-warning"> Delete </button>
            </li>
+           <br>
         </ul>
       </div>
   </div>
