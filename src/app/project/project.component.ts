@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IProject } from './project';
 import { AppService } from '../app.service';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project',
@@ -13,6 +15,9 @@ export class ProjectComponent implements OnInit {
   projects: IProject[] =[];
   errorMessage: string;
   sortOrder: boolean = false;
+  project: IProject = new IProject();
+  isEdit: boolean = false;
+  managerName: string;
 
   _projectFilter: string;
 
@@ -24,7 +29,9 @@ export class ProjectComponent implements OnInit {
     this.filteredProjects = this.projectFilter ? this.performFilter(this.projectFilter) : this.projects;
   }
 
-  constructor(private projectService: AppService) { }
+  constructor(private projectService: AppService,
+              private router: Router,
+              private datePipe: DatePipe) { }
   
   ngOnInit() {
     this.projectService.getProjects().subscribe(
@@ -39,7 +46,7 @@ export class ProjectComponent implements OnInit {
   performFilter(filterBy: string) : IProject[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.projects.filter((project: IProject) => 
-      project.project.toLocaleLowerCase().indexOf(filterBy) !== -1);
+      project.projectName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
   sortByStart(){
@@ -76,5 +83,23 @@ export class ProjectComponent implements OnInit {
       this.filteredProjects.sort((a,b) => b.completedTasks - a.completedTasks);
     
     this.sortOrder = !this.sortOrder;
+  }
+
+  editProjectData(projectData) {
+    this.project = Object.assign({}, projectData);
+    this.isEdit = true;
+    this.managerName = this.project.firstName + ',' + this.project.lastName;
+    this.project.projectStartDate = this.datePipe.transform(this.project.projectStartDate, 'yyyy-MM-dd');
+    this.project.projectEndDate = this.datePipe.transform(this.project.projectEndDate, 'yyyy-MM-dd');
+    console.log("project : " + this.project.projectName);
+    console.log("project : " + this.project.projectStartDate);
+    window.scrollTo(0, 0);
+  }
+
+  cancelEdit() {
+    this.isEdit = false;
+    this.project = new IProject();
+    this.managerName = '';
+    this.router.navigate(['/project']);
   }
 }

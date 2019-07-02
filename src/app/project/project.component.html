@@ -1,12 +1,13 @@
 <div class='card'>
     <div class="card-body">
         <div class="container">
-            <form action="/action_page.php">
+            <form id="addProjectForm" #userForm="ngForm">
               
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="project"> Project: </label>
+                <label class="col-sm-2 col-form-label"> Project: </label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="project" placeholder="Enter project name" name="project">
+                  <input type="text" #projectName="ngModel" class="form-control" placeholder="Enter project name" name="projectName"
+                        [class.is-invalid]="projectName.invalid && projectName.touched" [(ngModel)]="project.projectName">
                 </div>
               </div>
 
@@ -14,9 +15,11 @@
                   <div class="checkbox">
                     <label><input type="checkbox" name="setDates"> Set Start and End Date </label>
                   </div>
-                  <div class="input-group col-sm-4">
-                      <input type="text" class="form-control btn-space" placeholder="Start Date" name="startDate">
-                      <input type="text" class="form-control btn-space" placeholder="End Date" name="endDate">
+                  <div class="input-group col-sm-5">
+                      <input type="date" class="form-control datepicker btn-space" #projectStartDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="projectStartDate"
+                            [class.is-invalid]="projectStartDate.invalid && projectStartDate.touched" [(ngModel)]="project.projectStartDate">
+                      <input type="date" class="form-control datepicker btn-space" #projectEndDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="projectEndDate"
+                            [class.is-invalid]="projectEndDate.invalid && projectEndDate.touched" [(ngModel)]="project.projectEndDate">
                   </div>
               </div>
 
@@ -31,7 +34,7 @@
                 <label class="col-form-label col-sm-2"> Manager: </label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter / Search Manager name" name="search">
+                    <input type="text" class="form-control" placeholder="Enter / Search Manager name" value="{{ managerName }}">
                     <div class="input-group-btn">
                           <button type="submit" class="btn btn-outline-success"> Search </button>
                     </div>
@@ -41,8 +44,10 @@
 
               <div class="form-group row">
                   <div class="col-sm-12 text-center">
-                    <button type="reset" class="btn btn-warning btn-space float-right"> Reset </button>
-                    <button type="submit" class="btn btn-success btn-space float-right"> Add </button>
+                      <button id="reset" type="reset" class="btn btn-warning btn-space float-right" *ngIf='!isEdit'> Reset </button>
+                      <button id="submit" type="submit" class="btn btn-success btn-space float-right" *ngIf='!isEdit'> Add </button>
+                      <button id="cancel" class="btn btn-warning btn-space float-right" *ngIf='isEdit' (click)="cancelEdit()"> Cancel </button>
+                      <button id="update" type="submit" class="btn btn-success btn-space float-right" *ngIf='isEdit'> Update </button>
                   </div>
               </div>
 
@@ -69,10 +74,10 @@
         <div class="col-sm-12 container">
             <ul class="list-unstyled row" *ngFor = 'let project of filteredProjects'>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Project :</li>
-              <li class="list-item col-sm-6 p-1 bg-light">{{ project.project }}</li>
+              <li class="list-item col-sm-6 p-1 bg-light">{{ project.projectName }}</li>
               <li class="list-item col-sm-2 p-1 font-weight-bold text-center">Priority</li>
               <li class="list-item col-sm-2 p-1">
-                <button class="btn btn-success"> Update </button>
+                <button class="btn btn-success" (click)="editProjectData(project)"> Update </button>
               </li>
 
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">No of Tasks :</li>

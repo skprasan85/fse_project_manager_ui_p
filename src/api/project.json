@@ -1,7 +1,7 @@
 [
     {
         "projectId": 7,
-        "project": "US Open",
+        "projectName": "US Open",
         "projectStartDate": "2019-06-01T00:00:00.000+0000",
         "projectEndDate": "2019-06-21T00:00:00.000+0000",
         "projectPriority": 3,
@@ -14,7 +14,7 @@
     },
     {
         "projectId": 8,
-        "project": "T20 World Cup",
+        "projectName": "T20 World Cup",
         "projectStartDate": "2019-06-05T00:00:00.000+0000",
         "projectEndDate": "2019-07-20T00:00:00.000+0000",
         "projectPriority": 10,

@@ -1,36 +1,41 @@
 <div class='card'>
     <div class="card-body">
         <div class="container">
-            <form action="/action_page.php">
+            <form id="addUserForm" #userForm="ngForm">
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="first"> First Name: </label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="first" placeholder="Enter First name" name="first">
+                    <input type="text" #firstName="ngModel" class="form-control" placeholder="Enter First name" name="firstName"
+                          [class.is-invalid]="firstName.invalid && firstName.touched" [(ngModel)]="user.firstName">
                   </div>
               </div>
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="last"> Last Name: </label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="last" placeholder="Enter Last name" name="last">
+                    <input type="text" #lastName="ngModel" class="form-control" placeholder="Enter Last name" name="lastName"
+                          [(ngModel)]="user.lastName">
                   </div>
               </div>
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="id"> Employee Id: </label>
                   <div class="col-sm-4">
-                    <input type="text" class="form-control" id="id" placeholder="Enter Employee Id" name="id">
+                    <input type="text" #employeeId="ngModel" class="form-control" placeholder="Enter Employee Id" name="employeeId"
+                          [(ngModel)]="user.employeeId">
                   </div>
                   <div class="checkbox">
-                      <label><input type="checkbox" name="setManager">  Assign as Manager </label>
+                      <label><input type="checkbox" #manager="ngModel" name="manager" [(ngModel)]="user.manager">  Assign as Manager </label>
                   </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-sm-12 text-center">
-                  <button type="reset" class="btn btn-warning btn-space float-right"> Reset </button>
-                  <button type="submit" class="btn btn-success btn-space float-right"> Add </button>
+                  <button id="reset" type="reset" class="btn btn-warning btn-space float-right" *ngIf='!isEdit'> Reset </button>
+                  <button id="submit" type="submit" class="btn btn-success btn-space float-right" *ngIf='!isEdit'> Add </button>
+                  <button id="cancel" class="btn btn-warning btn-space float-right" *ngIf='isEdit' (click)="cancelEdit()"> Cancel </button>
+                  <button id="update" type="submit" class="btn btn-success btn-space float-right" *ngIf='isEdit'> Update </button>
                 </div>
               </div>
 
@@ -57,7 +62,7 @@
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">First Name :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.firstName }}</li>
               <li class="list-item col-sm-3 p-1">
-                <button class="btn btn-success"> Edit </button>
+                <button class="btn btn-success" (click)="editUserData(user)"> Edit </button>
               </li>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Last Name :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.lastName }}</li>

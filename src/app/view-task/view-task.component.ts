@@ -41,14 +41,10 @@ export class ViewTaskComponent implements OnInit {
     );
   }
 
-  updateTask(): void {
-    this.router.navigate(['/updateTask'])
-  }
-
   performFilter(filterBy: string) : IViewTask[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.viewTasks.filter((viewTask: IViewTask) => 
-      viewTask.task.toLocaleLowerCase().indexOf(filterBy) !== -1);
+      viewTask.taskName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
   sortByStart(){
@@ -80,11 +76,16 @@ export class ViewTaskComponent implements OnInit {
 
   sortByTask(){
     if(this.sortOrder)
-      this.filteredViewTasks.sort((a,b) => a.task.localeCompare(b.task));
+      this.filteredViewTasks.sort((a,b) => a.taskName.localeCompare(b.taskName));
     else
-      this.filteredViewTasks.sort((a,b) => b.task.localeCompare(a.task));
+      this.filteredViewTasks.sort((a,b) => b.taskName.localeCompare(a.taskName));
     
     this.sortOrder = !this.sortOrder;
+  }
+
+  editTask(taskId) {
+    console.log("task : " + taskId);
+    this.router.navigate(['/updateTask',taskId])
   }
 
 }

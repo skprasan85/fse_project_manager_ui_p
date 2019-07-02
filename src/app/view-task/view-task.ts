@@ -1,15 +1,15 @@
-export interface IViewTask{
+export class IViewTask{
     id: number;
-    task: string;
-    startDate: Date;
-    endDate: Date;
+    taskName: string;
+    startDate: string;
+    endDate: string;
     priority: number;
     parentId: number;
     parentTask: string;
     projectId: number;
-    project: string;
-    projectStartDate: Date;
-    projectEndDate: Date;
+    projectName: string;
+    projectStartDate: string;
+    projectEndDate: string;
     projectPriority: number;
     userId: number;
     firstName: string;

@@ -35,13 +35,13 @@
       <hr>
       <div class="col-sm-12 container">
         <ul class="list-unstyled row" *ngFor = 'let viewTask of filteredViewTasks'>
-           <li class="list-item col-sm-3 p-2 bg-light">{{ viewTask.task }}</li>
+           <li class="list-item col-sm-3 p-2 bg-light">{{ viewTask.taskName }}</li>
            <li class="list-item col-sm-2 p-2 bg-light">{{ viewTask.parentTask }}</li>
            <li class="list-item col-sm-1 p-2 text-center">{{ viewTask.priority }}</li>
            <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.startDate | date:'MM/dd/yyyy' }}</li>
            <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.endDate | date:'MM/dd/yyyy' }}</li>
            <li class="list-item col-sm-1 p-2">
-              <button class="btn btn-success" (click)='updateTask()'> Edit </button>
+              <button class="btn btn-success" (click)='editTask(viewTask.id)'> Edit </button>
            </li>
            <li class="list-item col-sm-1 p-2">
               <button class="btn btn-warning"> Delete </button>

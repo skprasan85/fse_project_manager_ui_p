@@ -1,9 +1,9 @@
 
-export interface IProject {
+export class IProject {
     projectId: number;
-    project: string;
-    projectStartDate: Date;
-    projectEndDate: Date;
+    projectName: string;
+    projectStartDate: string;
+    projectEndDate: string;
     projectPriority: number;
     numberOfTasks: number;
     completedTasks: number;

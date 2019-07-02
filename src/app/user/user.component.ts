@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from './user';
 import { AppService } from '../app.service';
-import { stringify } from '@angular/core/src/util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -15,6 +15,8 @@ export class UserComponent implements OnInit {
   fullName : string;
   errorMessage: string;
   sortOrder: boolean = false;
+  user: IUser = new IUser();
+  isEdit: boolean = false;
 
   _userFilter: string;
 
@@ -27,7 +29,8 @@ export class UserComponent implements OnInit {
     this.filteredUsers = this.userFilter ? this.performFilter(this.userFilter) : this.users;
   }
 
-  constructor(private userService: AppService) { }
+  constructor(private userService: AppService, 
+              private router: Router) { }
 
   ngOnInit() {
     this.userService.getUsers().subscribe(
@@ -71,5 +74,18 @@ export class UserComponent implements OnInit {
     
     this.sortOrder = !this.sortOrder;
   }
+
+  editUserData(userData) {
+    this.user = Object.assign({}, userData);
+    this.isEdit = true;
+    window.scrollTo(0, 0);
+  }
+
+  cancelEdit() {
+    this.isEdit = false;
+    this.user = new IUser();
+    this.router.navigate(['/user']);
+  }
+
 
 }
