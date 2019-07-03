@@ -1,12 +1,12 @@
 <div class='card'>
     <div class="card-body">
         <div class="container">
-            <form id="addProjectForm" #userForm="ngForm">
+          <form id="addProjectForm" #projectForm="ngForm" (ngSubmit)="saveProject(project)">
               
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label"> Project: </label>
                 <div class="col-sm-10">
-                  <input type="text" #projectName="ngModel" class="form-control" placeholder="Enter project name" name="projectName"
+                  <input type="text" #projectName="ngModel" required class="form-control" placeholder="Enter project name" name="projectName"
                         [class.is-invalid]="projectName.invalid && projectName.touched" [(ngModel)]="project.projectName">
                 </div>
               </div>
@@ -26,7 +26,9 @@
               <div class="slidecontainer">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label"> Priority: </label>
-                  <input type="range" min="1" max="30" value="0" class="slider" id="myRange">
+                  <input type="range" min="0" max="30" #projectPriority="ngModel" class="form-control slider" name="projectPriority"
+                        [class.is-invalid]="projectPriority.invalid && projectPriority.touched" [(ngModel)]="project.projectPriority">
+                  <p style="margin-left: 15px;">{{ project.projectPriority }}</p>
                 </div>
               </div>
 

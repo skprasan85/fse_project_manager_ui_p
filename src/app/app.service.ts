@@ -1,40 +1,107 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators'
 import { IViewTask } from './view-task/view-task';
 import { IProject } from './project/project';
 import { IUser } from './user/user';
 
-
+const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
-  private viewProjectUrl = 'api/project.json';
-  private viewUserUrl = 'api/user.json';
-  private viewTaskUrl = 'api/task.json';
+  private serviceURL = 'http://localhost:8070/api/projectManager'
 
   constructor(private http: HttpClient){}
 
   getProjects(): Observable<IProject[]> {
-      return this.http.get<IProject[]>(this.viewProjectUrl).pipe(
+
+      return this.http.get<IProject[]>(`${this.serviceURL}/findAllProjects`, httpOptions).pipe(
           tap(data => console.log('All : ' + JSON.stringify(data))),
           catchError(this.handleError)
       );
   }
 
+  addProject(project: IProject): Observable<IProject> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IProject>(`${this.serviceURL}/addProject`, project).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  updateProject(project: any): Observable<IProject> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IProject>(`${this.serviceURL}/updateProject`, project, httpOptions).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
   getUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.viewUserUrl).pipe(
+    return this.http.get<IUser[]>(`${this.serviceURL}/findAllUsers`).pipe(
         tap(data => console.log('All : ' + JSON.stringify(data))),
         catchError(this.handleError)
     );
   }
 
+  addUser(user: IUser): Observable<IUser> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IUser>(`${this.serviceURL}/addUser`, user).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  updateUser(user: any): Observable<IUser> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IUser>(`${this.serviceURL}/updateUser`, user, httpOptions).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  deleteUser(userId: any): Observable<any> {
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.delete(`${this.serviceURL}/deleteUser/${userId}`, httpOptions).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
   getViewTask(): Observable<IViewTask[]> {
-      return this.http.get<IViewTask[]>(this.viewTaskUrl).pipe(
+      return this.http.get<IViewTask[]>(`${this.serviceURL}/findAllTasks`).pipe(
           tap(data => console.log('All : ' + JSON.stringify(data))),
           catchError(this.handleError)
       );

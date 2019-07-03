@@ -9,7 +9,6 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { UserComponent } from './user/user.component';
 import { ProjectComponent } from './project/project.component';
-import { UpdateTaskComponent } from './update-task/update-task.component';
 import { DatePipe } from '@angular/common';
 
 @NgModule({
@@ -18,8 +17,7 @@ import { DatePipe } from '@angular/common';
     AddTaskComponent,
     ViewTaskComponent,
     UserComponent,
-    ProjectComponent,
-    UpdateTaskComponent
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

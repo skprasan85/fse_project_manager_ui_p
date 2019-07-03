@@ -85,14 +85,38 @@ export class ProjectComponent implements OnInit {
     this.sortOrder = !this.sortOrder;
   }
 
+  saveProject(projectData: IProject) {
+    this.project = projectData;
+
+    if(this.isEdit)
+    {
+      this.projectService.updateProject(this.project)
+        .subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['/project'])); 
+          }
+        );
+      this.isEdit = false;
+    } else {
+      this.projectService.addProject(this.project)
+        .subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['/project'])); 
+          }
+        );
+    }
+  }
+
   editProjectData(projectData) {
     this.project = Object.assign({}, projectData);
     this.isEdit = true;
     this.managerName = this.project.firstName + ',' + this.project.lastName;
     this.project.projectStartDate = this.datePipe.transform(this.project.projectStartDate, 'yyyy-MM-dd');
     this.project.projectEndDate = this.datePipe.transform(this.project.projectEndDate, 'yyyy-MM-dd');
-    console.log("project : " + this.project.projectName);
-    console.log("project : " + this.project.projectStartDate);
+    console.log('date : '+ this.project.projectStartDate);
+    console.log(this.project.projectStartDate + 'T00:00:00.000+0000');
     window.scrollTo(0, 0);
   }
 

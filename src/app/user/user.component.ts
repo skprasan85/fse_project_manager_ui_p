@@ -75,6 +75,35 @@ export class UserComponent implements OnInit {
     this.sortOrder = !this.sortOrder;
   }
 
+  saveUser(userData: IUser) {
+    this.user = userData;
+
+    if(this.filteredUsers.filter(user => user.employeeId == this.user.employeeId && user.userId != this.user.userId).length > 0)
+    {
+      this.errorMessage = "Employee Id : "+this.user.employeeId+" is already present";
+      return false;
+    }
+    if(this.isEdit)
+    {
+      this.userService.updateUser(this.user)
+        .subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['/user'])); 
+          }
+        );
+      this.isEdit = false;
+    } else {
+      this.userService.addUser(this.user)
+        .subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+              this.router.navigate(['/user'])); 
+          }
+        );
+    }
+  }
+
   editUserData(userData) {
     this.user = Object.assign({}, userData);
     this.isEdit = true;
@@ -85,6 +114,17 @@ export class UserComponent implements OnInit {
     this.isEdit = false;
     this.user = new IUser();
     this.router.navigate(['/user']);
+  }
+
+  deleteUser(userData) {
+    this.user = userData;
+    this.userService.deleteUser(this.user.userId)
+      .subscribe(
+        save => {
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/user'])); 
+        }
+      );
   }
 
 

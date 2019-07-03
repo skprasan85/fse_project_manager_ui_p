@@ -7,7 +7,8 @@
                   <label class="col-form-label col-sm-2"> Project: </label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter / Search Project name" name="projectSearch">
+                      <input type="text" #projectName="ngModel" class="form-control" placeholder="Enter / Search project name" name="projectName"
+                        [class.is-invalid]="projectName.invalid && projectName.touched" [(ngModel)]="task.projectName">
                       <div class="input-group-btn">
                             <button type="submit" class="btn btn-outline-success"> Search </button>
                       </div>
@@ -16,9 +17,10 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="task"> Task: </label>
+                <label class="col-sm-2 col-form-label"> Task: </label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="task" placeholder="Enter task name" name="task">
+                    <input type="text" #taskName="ngModel" class="form-control" placeholder="Enter / Search task name" name="taskName"
+                    [class.is-invalid]="taskName.invalid && taskName.touched" [(ngModel)]="task.taskName">
                 </div>
               </div>
 
@@ -31,7 +33,9 @@
               <div class="slidecontainer">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label"> Priority: </label>
-                  <input type="range" min="1" max="30" value="0" class="slider" id="myRange">
+                  <input type="range" min="0" max="30" #priority="ngModel" class="form-control slider" name="priority"
+                        [class.is-invalid]="priority.invalid && priority.touched" [(ngModel)]="task.priority">
+                  <p style="margin-left: 15px;">{{ task.priority }}</p>
                 </div>
               </div>
 
@@ -39,7 +43,8 @@
                   <label class="col-form-label col-sm-2"> Parent Task: </label>
                   <div class="col-sm-10">
                     <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter / Search Parent Task name" name="parentSearch">
+                      <input type="text" #parentTask="ngModel" class="form-control" placeholder="Enter / Search parentTask name" name="parentTask"
+                            [class.is-invalid]="parentTask.invalid && parentTask.touched" [(ngModel)]="task.parentTask">
                       <div class="input-group-btn">
                             <button type="submit" class="btn btn-outline-success"> Search </button>
                       </div>
@@ -50,9 +55,11 @@
               <div class="form-group row">
                 <div class="input-group">
                     <label class="col-form-label  col-sm-2"> Start Date: </label>
-                    <input type="date" class="form-control col-sm-4 datepicker" placeholder="mm/dd/yyyy" name="startDate">
+                    <input type="date" class="form-control col-sm-4 datepicker" #startDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="startDate"
+                          [class.is-invalid]="startDate.invalid && startDate.touched" [(ngModel)]="task.startDate">  
                     <label class="col-form-label col-sm-2"> End Date: </label>
-                    <input type="date" class="form-control col-sm-4 datepicker" placeholder="mm/dd/yyyy" name="endDate">
+                    <input type="date" class="form-control col-sm-4 datepicker" #endDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="endDate"
+                          [class.is-invalid]="endDate.invalid && endDate.touched" [(ngModel)]="task.endDate">
                 </div>
               </div>
 
@@ -60,7 +67,7 @@
                 <label class="col-form-label col-sm-2"> User: </label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter / Search User name" name="userSearch">
+                    <input type="text" class="form-control" placeholder="Enter / Search User name" value="{{ userName }}">
                     <div class="input-group-btn">
                           <button type="submit" class="btn btn-outline-success"> Search </button>
                     </div>
@@ -70,8 +77,10 @@
 
               <div class="form-group row">
                   <div class="col-sm-12 text-center">
-                    <button type="reset" class="btn btn-warning btn-space float-right"> Reset </button>
-                    <button type="submit" class="btn btn-success btn-space float-right"> Add Task </button>
+                      <button id="reset" type="reset" class="btn btn-warning btn-space float-right" *ngIf='!isEdit'> Reset </button>
+                      <button id="submit" type="submit" class="btn btn-success btn-space float-right" *ngIf='!isEdit'> Add </button>
+                      <button id="cancel" class="btn btn-warning btn-space float-right" *ngIf='isEdit' (click)="cancelEdit()"> Cancel </button>
+                      <button id="update" type="submit" class="btn btn-success btn-space float-right" *ngIf='isEdit'> Update </button>
                   </div>
               </div>
 

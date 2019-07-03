@@ -1,7 +1,7 @@
 <div class='card'>
     <div class="card-body">
         <div class="container">
-            <form id="addUserForm" #userForm="ngForm">
+            <form id="addUserForm" #userForm="ngForm" (ngSubmit)="saveUser(user)">
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="first"> First Name: </label>
@@ -28,6 +28,7 @@
                   <div class="checkbox">
                       <label><input type="checkbox" #manager="ngModel" name="manager" [(ngModel)]="user.manager">  Assign as Manager </label>
                   </div>
+                  <!-- <small class="text-danger" [class.d-none]="   errorMessage =>   ''">{{ errorMessage }}</small> -->
               </div>
 
               <div class="form-group row">
@@ -67,7 +68,7 @@
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Last Name :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.lastName }}</li>
               <li class="list-item col-sm-3 p-1">
-                <button class="btn btn-warning"> Delete </button>
+                <button class="btn btn-warning" (click)="deleteUser(user)"> Delete </button>
               </li>
               <li class="list-item col-sm-2 p-1 bg-light font-weight-bold">Employee Id :</li>
               <li class="list-item col-sm-6 p-1 bg-light">{{ user.employeeId }}</li>
