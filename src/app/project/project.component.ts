@@ -98,6 +98,7 @@ export class ProjectComponent implements OnInit {
           }
         );
       this.isEdit = false;
+      console.log('Project Updated Successfully')
     } else {
       this.projectService.addProject(this.project)
         .subscribe(
@@ -106,6 +107,7 @@ export class ProjectComponent implements OnInit {
               this.router.navigate(['/project'])); 
           }
         );
+        console.log('Project Inserted Successfully')
     }
   }
 

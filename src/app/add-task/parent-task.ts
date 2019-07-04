@@ -1,4 +1,4 @@
 export class IParent{
     parentId: number;
-    parentName: string;
+    parentTask: string;
 }

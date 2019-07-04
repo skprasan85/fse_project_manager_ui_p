@@ -7,7 +7,7 @@
                   <label class="col-sm-2 col-form-label" for="first"> First Name: </label>
                   <div class="col-sm-10">
                     <input type="text" #firstName="ngModel" class="form-control" placeholder="Enter First name" name="firstName"
-                          [class.is-invalid]="firstName.invalid && firstName.touched" [(ngModel)]="user.firstName">
+                          [class.is-invalid]="firstName.invalid && firstName.touched" [(ngModel)]="user.firstName" required>
                   </div>
               </div>
 
@@ -15,7 +15,7 @@
                   <label class="col-sm-2 col-form-label" for="last"> Last Name: </label>
                   <div class="col-sm-10">
                     <input type="text" #lastName="ngModel" class="form-control" placeholder="Enter Last name" name="lastName"
-                          [(ngModel)]="user.lastName">
+                          [class.is-invalid]="lastName.invalid && lastName.touched" [(ngModel)]="user.lastName" required>
                   </div>
               </div>
 
@@ -23,7 +23,7 @@
                   <label class="col-sm-2 col-form-label" for="id"> Employee Id: </label>
                   <div class="col-sm-4">
                     <input type="text" #employeeId="ngModel" class="form-control" placeholder="Enter Employee Id" name="employeeId"
-                          [(ngModel)]="user.employeeId">
+                          [class.is-invalid]="employeeId.invalid && employeeId.touched" [(ngModel)]="user.employeeId" required>
                   </div>
                   <div class="checkbox">
                       <label><input type="checkbox" #manager="ngModel" name="manager" [(ngModel)]="user.manager">  Assign as Manager </label>

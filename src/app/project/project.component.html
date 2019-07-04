@@ -16,18 +16,21 @@
                     <label><input type="checkbox" name="setDates"> Set Start and End Date </label>
                   </div>
                   <div class="input-group col-sm-5">
-                      <input type="date" class="form-control datepicker btn-space" #projectStartDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="projectStartDate"
-                            [class.is-invalid]="projectStartDate.invalid && projectStartDate.touched" [(ngModel)]="project.projectStartDate">
-                      <input type="date" class="form-control datepicker btn-space" #projectEndDate="ngModel" class="form-control" placeholder="mm/dd/yyyy" name="projectEndDate"
-                            [class.is-invalid]="projectEndDate.invalid && projectEndDate.touched" [(ngModel)]="project.projectEndDate">
+                      <input type="date" required class="form-control datepicker btn-space" #projectStartDate="ngModel" 
+                             placeholder="mm/dd/yyyy" name="projectStartDate" [(ngModel)]="project.projectStartDate"
+                            [class.is-invalid]="projectStartDate.invalid && projectStartDate.touched" >
+                      <input type="date" required class="form-control datepicker btn-space" #projectEndDate="ngModel" 
+                             placeholder="mm/dd/yyyy" name="projectEndDate" [(ngModel)]="project.projectEndDate"
+                            [class.is-invalid]="projectEndDate.invalid && projectEndDate.touched">
                   </div>
               </div>
 
               <div class="slidecontainer">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label"> Priority: </label>
-                  <input type="range" min="0" max="30" #projectPriority="ngModel" class="form-control slider" name="projectPriority"
-                        [class.is-invalid]="projectPriority.invalid && projectPriority.touched" [(ngModel)]="project.projectPriority">
+                  <input type="range" min="0" max="30" #projectPriority="ngModel" required 
+                         class="form-control slider" name="projectPriority" [(ngModel)]="project.projectPriority"
+                        [class.is-invalid]="projectPriority.invalid && projectPriority.touched">
                   <p style="margin-left: 15px;">{{ project.projectPriority }}</p>
                 </div>
               </div>
@@ -36,7 +39,7 @@
                 <label class="col-form-label col-sm-2"> Manager: </label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter / Search Manager name" value="{{ managerName }}">
+                    <input type="text" required class="form-control" placeholder="Enter / Search Manager name" value="{{ managerName }}">
                     <div class="input-group-btn">
                           <button type="submit" class="btn btn-outline-success"> Search </button>
                     </div>

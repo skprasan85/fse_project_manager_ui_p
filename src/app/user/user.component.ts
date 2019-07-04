@@ -93,6 +93,7 @@ export class UserComponent implements OnInit {
           }
         );
       this.isEdit = false;
+      console.log('User Updated Successfully')
     } else {
       this.userService.addUser(this.user)
         .subscribe(
@@ -101,6 +102,7 @@ export class UserComponent implements OnInit {
               this.router.navigate(['/user'])); 
           }
         );
+        console.log('User Inserted Successfully')
     }
   }
 
@@ -125,6 +127,7 @@ export class UserComponent implements OnInit {
             this.router.navigate(['/user'])); 
         }
       );
+      console.log('User Deleted Successfully')
   }
 
 

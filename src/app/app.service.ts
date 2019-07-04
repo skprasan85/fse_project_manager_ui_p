@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators'
 import { IViewTask } from './view-task/view-task';
 import { IProject } from './project/project';
 import { IUser } from './user/user';
+import { IParent } from './add-task/parent-task';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -105,6 +106,52 @@ export class AppService {
           tap(data => console.log('All : ' + JSON.stringify(data))),
           catchError(this.handleError)
       );
+  }
+
+  addTask(task: IViewTask): Observable<IViewTask> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IViewTask>(`${this.serviceURL}/addTask`, task).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  updateTask(task: any): Observable<IViewTask> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IViewTask>(`${this.serviceURL}/updateTask`, task, httpOptions).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  addParentTask(parentTask: IParent): Observable<IParent> {
+
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+    httpOptions.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    return this.http.post<IParent>(`${this.serviceURL}/addParentTask`, parentTask).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );  
+  }
+
+  getParentTasks(): Observable<IParent[]> {
+    return this.http.get<IParent[]>(`${this.serviceURL}/getParentList`).pipe(
+        tap(data => console.log('All : ' + JSON.stringify(data))),
+        catchError(this.handleError)
+    );
   }
 
 

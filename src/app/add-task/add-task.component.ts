@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { IViewTask } from '../view-task/view-task';
 import { DatePipe } from '@angular/common';
+import { IParent } from './parent-task';
 
 @Component({
   selector: 'app-add-task',
@@ -12,14 +13,16 @@ import { DatePipe } from '@angular/common';
 export class AddTaskComponent implements OnInit {
 
   isEdit: boolean = false;
+  isParent: boolean = false;
   tasks: IViewTask[] = [];
   task: IViewTask = new IViewTask();
+  parent: IParent = new IParent();
   userName: string;
   errorMessage: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private appService: AppService,
+              private taskService: AppService,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -27,7 +30,7 @@ export class AddTaskComponent implements OnInit {
     console.log("task Id : " + taskId);
     if(!(taskId == null)){
       this.isEdit = true;
-      this.appService.getViewTask().subscribe(
+      this.taskService.getViewTask().subscribe(
         tasks => {
           this.task = tasks.filter(task => task.id.toLocaleString() == taskId)[0];
           this.task.startDate =  this.datePipe.transform(this.task.startDate, 'yyyy-MM-dd');
@@ -38,6 +41,66 @@ export class AddTaskComponent implements OnInit {
       );
     }
 
+  }
+
+  saveTask(taskData: IViewTask) {
+    this.task = taskData;
+
+    if (this.isParent) {
+      this.parent.parentTask = this.task.taskName;
+      this.taskService.addParentTask(this.parent)
+        .subscribe(
+          save => {
+            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                  this.router.navigate(['/task'])); 
+          }
+        );
+        console.log('Parent Task Inserted Successfully')
+    } 
+      else {
+        if(this.isEdit)
+        {
+          this.taskService.updateTask(this.task)
+            .subscribe(
+              save => {
+                this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                  this.router.navigate(['/viewTask'])); 
+              }
+            );
+          this.isEdit = false;
+          console.log('Task Updated Successfully')
+        } else {
+          this.taskService.addTask(this.task)
+            .subscribe(
+              save => {
+                this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                  this.router.navigate(['/viewTask'])); 
+              }
+            );
+            console.log('Task Inserted Successfully')
+        }
+    }
+    
+  }
+
+  parentTaskEvent(event) {
+    this.isParent = !!event.target.checked;
+    if (this.isParent) {
+      this.errorMessage = undefined;
+      this.task.projectId = undefined;
+      this.task.projectName = undefined;
+      this.task.parentId = undefined;
+      this.task.parentTask = undefined;
+      this.task.startDate = undefined;
+      this.task.endDate = undefined;
+      this.task.employeeId = undefined;
+      this.task.firstName = undefined;
+      this.task.lastName = undefined;
+    }
+    else {
+      this.task.startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+      this.task.endDate = this.datePipe.transform(new Date(new Date().getTime() + 86400000), 'yyyy-MM-dd');
+    }
   }
 
   formatLabel(value: number | null) {
