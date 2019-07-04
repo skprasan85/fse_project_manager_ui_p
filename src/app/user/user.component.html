@@ -7,29 +7,37 @@
                   <label class="col-sm-2 col-form-label" for="first"> First Name: </label>
                   <div class="col-sm-10">
                     <input type="text" #firstName="ngModel" class="form-control" placeholder="Enter First name" name="firstName"
-                          [class.is-invalid]="firstName.invalid && firstName.touched" [(ngModel)]="user.firstName" required>
+                          [class.is-invalid]="firstName.invalid && firstName.touched" [(ngModel)]="user.firstName" required
+                          (keydown.space)="$event.preventDefault()">
                   </div>
               </div>
+              <small class="text-danger" [class.d-none]="firstName.valid || firstName.untouched">First Name is required</small>
+
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="last"> Last Name: </label>
                   <div class="col-sm-10">
                     <input type="text" #lastName="ngModel" class="form-control" placeholder="Enter Last name" name="lastName"
-                          [class.is-invalid]="lastName.invalid && lastName.touched" [(ngModel)]="user.lastName" required>
+                          [class.is-invalid]="lastName.invalid && lastName.touched" [(ngModel)]="user.lastName" required
+                          (keydown.space)="$event.preventDefault()">
                   </div>
               </div>
+              <small class="text-danger" [class.d-none]="lastName.valid || lastName.untouched">Last Name is required</small>
+
 
               <div class="form-group row">
                   <label class="col-sm-2 col-form-label" for="id"> Employee Id: </label>
                   <div class="col-sm-4">
                     <input type="text" #employeeId="ngModel" class="form-control" placeholder="Enter Employee Id" name="employeeId"
-                          [class.is-invalid]="employeeId.invalid && employeeId.touched" [(ngModel)]="user.employeeId" required>
+                          [class.is-invalid]="employeeId.invalid && employeeId.touched" [(ngModel)]="user.employeeId" required
+                          (keypress)="numberOnly($event)" pattern="[0-9]*" minlength="1">
                   </div>
                   <div class="checkbox">
                       <label><input type="checkbox" #manager="ngModel" name="manager" [(ngModel)]="user.manager">  Assign as Manager </label>
                   </div>
-                  <!-- <small class="text-danger" [class.d-none]="   errorMessage =>   ''">{{ errorMessage }}</small> -->
               </div>
+              <small class="text-danger" [class.d-none]="employeeId.valid || employeeId.untouched">Employee Id is required</small>
+
 
               <div class="form-group row">
                 <div class="col-sm-12 text-center">

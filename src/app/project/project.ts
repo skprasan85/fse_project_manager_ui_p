@@ -11,4 +11,5 @@ export class IProject {
     firstName: string;
     lastName: string;
     employeeId: number;
+    status: boolean;
 }

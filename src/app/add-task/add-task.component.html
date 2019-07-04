@@ -16,6 +16,7 @@
                   </div>
               </div>
 
+
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label"> Task: </label>
                 <div class="col-sm-10">
@@ -23,6 +24,7 @@
                           [class.is-invalid]="taskName.invalid && taskName.touched" [(ngModel)]="task.taskName">
                 </div>
               </div>
+              <small class="text-danger" [class.d-none]="taskName.valid || taskName.untouched">Task is required</small>
 
               <div class="form-group form-inline">
                 <label>
@@ -32,6 +34,7 @@
                 </label>
               </div>
 
+
               <div class="slidecontainer">
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label"> Priority: </label>
@@ -40,6 +43,8 @@
                   <p style="margin-left: 15px;">{{ task.priority }}</p>
                 </div>
               </div>
+              <small class="text-danger" [class.d-none]="priority.valid || priority.untouched">Priority is required</small>
+
 
               <div class="form-group row">
                   <label class="col-form-label col-sm-2"> Parent Task: </label>
@@ -54,18 +59,21 @@
                   </div>
               </div>
 
+
               <div class="form-group row">
                 <div class="input-group">
                     <label class="col-form-label  col-sm-2"> Start Date: </label>
                     <input type="date" class="form-control col-sm-4 datepicker" #startDate="ngModel" required 
                            placeholder="mm/dd/yyyy" name="startDate" [(ngModel)]="task.startDate"
+                           min="{{ todayDate }}"  max="{{ task.endDate }}"
                           [disabled]="isParent" [class.is-invalid]="startDate.invalid && startDate.touched">  
                     <label class="col-form-label col-sm-2"> End Date: </label>
                     <input type="date" class="form-control col-sm-4 datepicker" #endDate="ngModel" required 
-                           placeholder="mm/dd/yyyy" name="endDate" [(ngModel)]="task.endDate"
+                           placeholder="mm/dd/yyyy" name="endDate" [(ngModel)]="task.endDate" min="{{ task.startDate }}"
                           [disabled]="isParent" [class.is-invalid]="endDate.invalid && endDate.touched">
                 </div>
               </div>
+
 
               <div class="form-group row">
                 <label class="col-form-label col-sm-2"> User: </label>
@@ -80,6 +88,7 @@
                 </div>
               </div>
 
+              
               <div class="form-group row">
                   <div class="col-sm-12 text-center">
                       <button id="reset" type="reset" class="btn btn-warning btn-space float-right" *ngIf='!isEdit'> Reset </button>

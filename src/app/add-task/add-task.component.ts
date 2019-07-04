@@ -48,6 +48,7 @@ export class AddTaskComponent implements OnInit {
 
     if (this.isParent) {
       this.parent.parentTask = this.task.taskName;
+
       this.taskService.addParentTask(this.parent)
         .subscribe(
           save => {
@@ -60,21 +61,26 @@ export class AddTaskComponent implements OnInit {
       else {
         if(this.isEdit)
         {
+          this.task.startDate += 'T04:00:00.000+0000';
+          this.task.endDate += 'T04:00:00.000+0000';
+
           this.taskService.updateTask(this.task)
             .subscribe(
               save => {
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-                  this.router.navigate(['/viewTask'])); 
+                  this.router.navigate(['/viewTask']);
               }
             );
           this.isEdit = false;
           console.log('Task Updated Successfully')
         } else {
+          
+          this.task.startDate += 'T04:00:00.000+0000';
+          this.task.endDate += 'T04:00:00.000+0000';
+
           this.taskService.addTask(this.task)
             .subscribe(
               save => {
-                this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-                  this.router.navigate(['/viewTask'])); 
+                  this.router.navigate(['/viewTask']);
               }
             );
             console.log('Task Inserted Successfully')

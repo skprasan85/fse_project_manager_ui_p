@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { IViewTask } from './view-task';
 import { AppService } from '../app.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-task',
@@ -13,6 +14,7 @@ export class ViewTaskComponent implements OnInit {
 
   filteredViewTasks: IViewTask[];
   viewTasks: IViewTask[] = [];
+  task: IViewTask = new IViewTask();
   errorMessage: string;
   sortOrder: boolean = false;
 
@@ -27,12 +29,13 @@ export class ViewTaskComponent implements OnInit {
   }
 
   constructor(private router: Router,
-              private appService: AppService) {
+              private taskService: AppService,
+              private datePipe: DatePipe) {
     
   }
 
   ngOnInit() {
-    this.appService.getViewTask().subscribe(
+    this.taskService.getViewTask().subscribe(
       viewTasks => {
         this.viewTasks = viewTasks;
         this.filteredViewTasks = this.viewTasks;
@@ -74,11 +77,35 @@ export class ViewTaskComponent implements OnInit {
     this.sortOrder = !this.sortOrder;
   }
 
-  sortByTask(){
+  sortByTaskComplete(){
     if(this.sortOrder)
-      this.filteredViewTasks.sort((a,b) => a.taskName.localeCompare(b.taskName));
+      this.filteredViewTasks.sort((a,b) => {
+        if (a.status === b.status) {
+          return 0;
+        }
+       
+        if (a.status) {
+          return -1;
+        }
+    
+        if (b.status) {
+            return 1;
+        }
+      });
     else
-      this.filteredViewTasks.sort((a,b) => b.taskName.localeCompare(a.taskName));
+    this.filteredViewTasks.sort((a,b) => {
+      if (b.status === a.status) {
+        return 0;
+      }
+     
+      if (b.status) {
+        return -1;
+      }
+  
+      if (a.status) {
+          return 1;
+      }
+    });
     
     this.sortOrder = !this.sortOrder;
   }
@@ -86,6 +113,18 @@ export class ViewTaskComponent implements OnInit {
   editTask(taskId) {
     console.log("task : " + taskId);
     this.router.navigate(['/updateTask',taskId])
+  }
+
+  endTask(endtask) {
+    this.task = endtask;
+    this.task.status = true;
+    this.task.endDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd') + 'T04:00:00.000+0000';
+    this.taskService.updateTask(this.task)
+      .subscribe(
+        save => {
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/viewTask'])); 
+        });
   }
 
 }

@@ -127,7 +127,13 @@ export class UserComponent implements OnInit {
             this.router.navigate(['/user'])); 
         }
       );
-      console.log('User Deleted Successfully')
+      console.log('User Deleted Successfully');
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    this.errorMessage = "";
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
   }
 
 

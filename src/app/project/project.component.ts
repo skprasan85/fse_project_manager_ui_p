@@ -17,7 +17,9 @@ export class ProjectComponent implements OnInit {
   sortOrder: boolean = false;
   project: IProject = new IProject();
   isEdit: boolean = false;
+  isDateChecked: boolean = false;
   managerName: string;
+  todayDate: string;
 
   _projectFilter: string;
 
@@ -31,7 +33,11 @@ export class ProjectComponent implements OnInit {
 
   constructor(private projectService: AppService,
               private router: Router,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe) {
+
+      this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+      
+  }
   
   ngOnInit() {
     this.projectService.getProjects().subscribe(
@@ -90,6 +96,9 @@ export class ProjectComponent implements OnInit {
 
     if(this.isEdit)
     {
+      this.project.projectStartDate += 'T04:00:00.000+0000';
+      this.project.projectEndDate += 'T04:00:00.000+0000';
+      
       this.projectService.updateProject(this.project)
         .subscribe(
           save => {
@@ -100,21 +109,24 @@ export class ProjectComponent implements OnInit {
       this.isEdit = false;
       console.log('Project Updated Successfully')
     } else {
-      this.projectService.addProject(this.project)
-        .subscribe(
-          save => {
-            this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-              this.router.navigate(['/project'])); 
-          }
-        );
-        console.log('Project Inserted Successfully')
+        this.project.projectStartDate += 'T04:00:00.000+0000';
+        this.project.projectEndDate += 'T04:00:00.000+0000';
+
+        this.projectService.addProject(this.project)
+          .subscribe(
+            save => {
+              this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                this.router.navigate(['/project'])); 
+            }
+          );
+          console.log('Project Inserted Successfully')
     }
   }
 
   editProjectData(projectData) {
     this.project = Object.assign({}, projectData);
     this.isEdit = true;
-    this.managerName = this.project.firstName + ',' + this.project.lastName;
+    this.managerName = this.project.userId + ' - ' + this.project.firstName + ',' + this.project.lastName;
     this.project.projectStartDate = this.datePipe.transform(this.project.projectStartDate, 'yyyy-MM-dd');
     this.project.projectEndDate = this.datePipe.transform(this.project.projectEndDate, 'yyyy-MM-dd');
     console.log('date : '+ this.project.projectStartDate);
@@ -128,4 +140,9 @@ export class ProjectComponent implements OnInit {
     this.managerName = '';
     this.router.navigate(['/project']);
   }
+
+  dateSetter(event) {
+    this.isDateChecked = !!event.target.checked;
+  }
+
 }

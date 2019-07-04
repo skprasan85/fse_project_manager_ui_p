@@ -10,20 +10,29 @@
                         [class.is-invalid]="projectName.invalid && projectName.touched" [(ngModel)]="project.projectName">
                 </div>
               </div>
+              <small class="text-danger" [class.d-none]="projectName.valid || projectName.untouched">Project Name is required</small>
 
-              <div class="form-group row">        
+              <div class="form-group form-inline">        
                   <div class="checkbox">
-                    <label><input type="checkbox" name="setDates"> Set Start and End Date </label>
+                    <label><input type="checkbox" class="form-check-input" name="setDates"
+                            id="isDateChecked" [checked]="isDateChecked" (change)="dateSetter($event)">
+                      Set Start and End Date 
+                    </label>
                   </div>
                   <div class="input-group col-sm-5">
                       <input type="date" required class="form-control datepicker btn-space" #projectStartDate="ngModel" 
+                             min="{{ todayDate }}"  max="{{ project.projectEndDate }}" [disabled]=!isDateChecked
                              placeholder="mm/dd/yyyy" name="projectStartDate" [(ngModel)]="project.projectStartDate"
                             [class.is-invalid]="projectStartDate.invalid && projectStartDate.touched" >
                       <input type="date" required class="form-control datepicker btn-space" #projectEndDate="ngModel" 
+                             min="{{ project.projectStartDate }}"  [disabled]=!isDateChecked
                              placeholder="mm/dd/yyyy" name="projectEndDate" [(ngModel)]="project.projectEndDate"
                             [class.is-invalid]="projectEndDate.invalid && projectEndDate.touched">
                   </div>
               </div>
+              <small class="text-danger" 
+                    [class.d-none]="projectStartDate.valid || projectStartDate.untouched || projectEndDate.valid || projectEndDate.untouched">
+                    Check Dates and Enter Valid Values</small>
 
               <div class="slidecontainer">
                 <div class="form-group row">
@@ -34,6 +43,7 @@
                   <p style="margin-left: 15px;">{{ project.projectPriority }}</p>
                 </div>
               </div>
+              <small class="text-danger" [class.d-none]="projectPriority.valid || projectPriority.untouched">Priority is required</small>
 
               <div class="form-group row">
                 <label class="col-form-label col-sm-2"> Manager: </label>

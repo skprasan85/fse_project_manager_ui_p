@@ -8,10 +8,10 @@
             </div>
             <button class="btn btn-sm btn-outline-success col-sm-1"> Search </button>
             <div class="col-sm-2 text-right"> Sort Task By: </div>
-            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByStart()'> Start Date {{ sortOrder ? ' v' : ' ^' }}</button>
-            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByEnd()'> End Date {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByStart()'> Start Dt {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByEnd()'> End Dt {{ sortOrder ? ' v' : ' ^' }}</button>
             <button class="btn btn-sm btn-secondary btn-space" (click)='sortByPriority()'> Priority {{ sortOrder ? ' v' : ' ^' }}</button>
-            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByTask()'> Task {{ sortOrder ? ' v' : ' ^' }}</button>
+            <button class="btn btn-sm btn-secondary btn-space" (click)='sortByTaskComplete()'> Complete {{ sortOrder ? ' v' : ' ^' }}</button>
       </div>
       <br>
       <div class="form-group">
@@ -41,10 +41,10 @@
            <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.startDate | date:'MM/dd/yyyy' }}</li>
            <li class="list-item col-sm-2 p-2 text-center">{{ viewTask.endDate | date:'MM/dd/yyyy' }}</li>
            <li class="list-item col-sm-1 p-2">
-              <button class="btn btn-success" (click)='editTask(viewTask.id)'> Edit </button>
+              <button class="btn btn-success" [disabled]="viewTask.status" (click)='editTask(viewTask.id)'> Edit </button>
            </li>
            <li class="list-item col-sm-1 p-2">
-              <button class="btn btn-warning"> Complete </button>
+              <button class="btn btn-warning" [disabled]="viewTask.status" (click)="endTask(viewTask)"> End </button>
            </li>
            <br>
         </ul>
