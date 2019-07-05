@@ -68,15 +68,15 @@
       </div>
       <div class="modal-body">
         <div class="form-group form-inline">
-          <label class="modelLabel"> Project </label>
+          <label class="modelLabel btn-space"> Project </label>
           <select class="form-control selectInput" id="selectedProjectId" name="selectedProjectId" [(ngModel)]="selectedProjectId">
             <option *ngFor="let selectProject of projects" value="{{selectProject.projectId}}">
               {{ selectProject.projectId }} - {{ selectProject.projectName }}
             </option>
           </select>
         </div>
-        <button id="selectProjectTask" class="btn btn-primary" (click)="selectProject()">Select</button>
-        <button id="cancelButton" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+        <button id="selectProjectTask" class="btn btn-success btn-space" (click)="selectProject()">Select</button>
+        <button id="cancelButton" class="btn btn-warning btn-space" (click)="modal.dismiss()">Cancel</button>
       </div>
     </div>
 </ng-template>

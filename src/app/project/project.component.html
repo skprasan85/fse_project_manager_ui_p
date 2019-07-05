@@ -129,15 +129,15 @@
     </div>
     <div class="modal-body">
         <div class="form-group form-inline">
-          <label class="modelLabel"> Manager </label>
+          <label class="modelLabel btn-space"> Manager </label>
           <select class="form-control selectInput" id="selectedManagerId" name="selectedManagerId" [(ngModel)]="selectedManagerId">
             <option *ngFor="let user of users" value="{{user.userId}}">
               {{ user.employeeId }} - {{ user.firstName }} , {{ user.lastName }}
             </option>
           </select>
         </div>
-        <button id="selectManager" class="btn btn-primary" (click)="selectManager()">Select</button>
-        <button id="cancelButton" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+        <button id="selectManager" class="btn btn-success btn-space" (click)="selectManager()">Select</button>
+        <button id="cancelButton" class="btn btn-warning btn-space" (click)="modal.dismiss()">Cancel</button>
     </div>
   </div>
 </ng-template>
