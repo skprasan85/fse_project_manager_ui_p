@@ -29,11 +29,11 @@ export class UserComponent implements OnInit {
     this.filteredUsers = this.userFilter ? this.performFilter(this.userFilter) : this.users;
   }
 
-  constructor(private userService: AppService, 
+  constructor(private appService: AppService, 
               private router: Router) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(
+    this.appService.getUsers().subscribe(
       users => {
         this.users = users;
         this.filteredUsers = this.users;
@@ -85,7 +85,7 @@ export class UserComponent implements OnInit {
     }
     if(this.isEdit)
     {
-      this.userService.updateUser(this.user)
+      this.appService.updateUser(this.user)
         .subscribe(
           save => {
             this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
@@ -95,7 +95,7 @@ export class UserComponent implements OnInit {
       this.isEdit = false;
       console.log('User Updated Successfully')
     } else {
-      this.userService.addUser(this.user)
+      this.appService.addUser(this.user)
         .subscribe(
           save => {
             this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
@@ -120,7 +120,7 @@ export class UserComponent implements OnInit {
 
   deleteUser(userData) {
     this.user = userData;
-    this.userService.deleteUser(this.user.userId)
+    this.appService.deleteUser(this.user.userId)
       .subscribe(
         save => {
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>

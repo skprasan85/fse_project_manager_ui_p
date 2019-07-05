@@ -37,6 +37,7 @@
                   </div>
               </div>
               <small class="text-danger" [class.d-none]="employeeId.valid || employeeId.untouched">Employee Id is required</small>
+              <small class="text-danger" [class.d-none]="errorMessage == ''">{{ errorMessage }}</small>
 
 
               <div class="form-group row">

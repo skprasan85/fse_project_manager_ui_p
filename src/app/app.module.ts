@@ -10,6 +10,8 @@ import { ViewTaskComponent } from './view-task/view-task.component';
 import { UserComponent } from './user/user.component';
 import { ProjectComponent } from './project/project.component';
 import { DatePipe } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectViewPipe } from './view-task/project-view.pipe';
 
 @NgModule({
   declarations: [
@@ -17,13 +19,15 @@ import { DatePipe } from '@angular/common';
     AddTaskComponent,
     ViewTaskComponent,
     UserComponent,
-    ProjectComponent
+    ProjectComponent,
+    ProjectViewPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

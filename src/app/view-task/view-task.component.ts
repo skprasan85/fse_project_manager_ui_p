@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { IViewTask } from './view-task';
 import { AppService } from '../app.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IProject } from '../project/project';
 
 @Component({
   selector: 'app-view-task',
@@ -14,9 +16,13 @@ export class ViewTaskComponent implements OnInit {
 
   filteredViewTasks: IViewTask[];
   viewTasks: IViewTask[] = [];
+  projects: IProject[] = [];
   task: IViewTask = new IViewTask();
   errorMessage: string;
   sortOrder: boolean = false;
+  projectDisplayName: string;
+  filterProjectTaskId: number;
+  selectedProjectId: number;
 
   _viewTaskFilter: string;
 
@@ -29,25 +35,31 @@ export class ViewTaskComponent implements OnInit {
   }
 
   constructor(private router: Router,
-              private taskService: AppService,
-              private datePipe: DatePipe) {
+              private appService: AppService,
+              private datePipe: DatePipe,
+              private modalService: NgbModal) {
     
   }
 
   ngOnInit() {
-    this.taskService.getViewTask().subscribe(
+    this.appService.getViewTask().subscribe(
       viewTasks => {
         this.viewTasks = viewTasks;
         this.filteredViewTasks = this.viewTasks;
       },
       error => this.errorMessage = <any>error
     );
+
+    this.appService.getProjects().subscribe(projectModal => {
+      this.projects = projectModal;
+    });
+
   }
 
   performFilter(filterBy: string) : IViewTask[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.viewTasks.filter((viewTask: IViewTask) => 
-      viewTask.taskName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+      (viewTask.taskName.toLocaleLowerCase().indexOf(filterBy) !== -1));
   }
 
   sortByStart(){
@@ -119,12 +131,32 @@ export class ViewTaskComponent implements OnInit {
     this.task = endtask;
     this.task.status = true;
     this.task.endDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd') + 'T04:00:00.000+0000';
-    this.taskService.updateTask(this.task)
+    this.appService.updateTask(this.task)
       .subscribe(
         save => {
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
             this.router.navigate(['/viewTask'])); 
         });
+  }
+
+  openProjectModel(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    }, (reason) => {
+    });
+  }
+
+  selectProject() {
+    if (this.selectedProjectId) {
+      var project = this.projects.filter(project => project.projectId == this.selectedProjectId)[0];
+      this.projectDisplayName = project.projectId + ' - ' + project.projectName;
+      this.filterProjectTaskId = this.selectedProjectId;
+    } else
+    {
+      this.projectDisplayName = undefined;
+      this.selectedProjectId = undefined;
+      this.filterProjectTaskId = undefined;
+    }
+    this.modalService.dismissAll();
   }
 
 }

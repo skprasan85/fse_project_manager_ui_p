@@ -3,6 +3,8 @@ import { IProject } from './project';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { IUser } from '../user/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-project',
@@ -13,12 +15,15 @@ export class ProjectComponent implements OnInit {
 
   filteredProjects: IProject[];
   projects: IProject[] =[];
+  users: IUser[];
+  user: IUser = new IUser();
   errorMessage: string;
   sortOrder: boolean = false;
   project: IProject = new IProject();
   isEdit: boolean = false;
   isDateChecked: boolean = false;
   managerName: string;
+  selectedManagerId: number;
   todayDate: string;
 
   _projectFilter: string;
@@ -31,22 +36,28 @@ export class ProjectComponent implements OnInit {
     this.filteredProjects = this.projectFilter ? this.performFilter(this.projectFilter) : this.projects;
   }
 
-  constructor(private projectService: AppService,
+  constructor(private appService: AppService,
               private router: Router,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private modalService: NgbModal) {
 
       this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-      
+
   }
   
   ngOnInit() {
-    this.projectService.getProjects().subscribe(
+    this.appService.getProjects().subscribe(
       projects => {
         this.projects = projects;
         this.filteredProjects = this.projects;
       },
       error => this.errorMessage = <any>error
     );
+
+    this.appService.getUsers().subscribe(userModal => {
+      this.users = userModal.filter(user => user.manager);
+    });
+
   }
 
   performFilter(filterBy: string) : IProject[] {
@@ -94,12 +105,17 @@ export class ProjectComponent implements OnInit {
   saveProject(projectData: IProject) {
     this.project = projectData;
 
+    if (!this.project.userId) {
+      this.errorMessage = "Manager is required";
+      return false;
+    }
+
     if(this.isEdit)
     {
       this.project.projectStartDate += 'T04:00:00.000+0000';
       this.project.projectEndDate += 'T04:00:00.000+0000';
       
-      this.projectService.updateProject(this.project)
+      this.appService.updateProject(this.project)
         .subscribe(
           save => {
             this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
@@ -112,7 +128,7 @@ export class ProjectComponent implements OnInit {
         this.project.projectStartDate += 'T04:00:00.000+0000';
         this.project.projectEndDate += 'T04:00:00.000+0000';
 
-        this.projectService.addProject(this.project)
+        this.appService.addProject(this.project)
           .subscribe(
             save => {
               this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
@@ -126,11 +142,9 @@ export class ProjectComponent implements OnInit {
   editProjectData(projectData) {
     this.project = Object.assign({}, projectData);
     this.isEdit = true;
-    this.managerName = this.project.userId + ' - ' + this.project.firstName + ',' + this.project.lastName;
+    this.managerName = this.project.employeeId + ' - ' + this.project.firstName + ' , ' + this.project.lastName;
     this.project.projectStartDate = this.datePipe.transform(this.project.projectStartDate, 'yyyy-MM-dd');
     this.project.projectEndDate = this.datePipe.transform(this.project.projectEndDate, 'yyyy-MM-dd');
-    console.log('date : '+ this.project.projectStartDate);
-    console.log(this.project.projectStartDate + 'T00:00:00.000+0000');
     window.scrollTo(0, 0);
   }
 
@@ -144,5 +158,52 @@ export class ProjectComponent implements OnInit {
   dateSetter(event) {
     this.isDateChecked = !!event.target.checked;
   }
+
+  suspendProject(projectData) {
+    this.project = projectData;
+    this.project.status = true;
+    this.project.projectEndDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd') + 'T04:00:00.000+0000';
+    this.appService.updateProject(this.project)
+      .subscribe(
+        save => {
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+            this.router.navigate(['/project'])); 
+        });
+  }
+
+
+
+  openSubModel(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    }, (reason) => {
+      if (this.users.filter(user => user.userId == this.project.userId).length === 0) {
+        this.project.userId = undefined;
+        this.project.firstName = undefined;
+        this.project.lastName = undefined;
+        this.project.employeeId = undefined;
+      }
+    });
+  }
+
+  selectManager() {
+    if (!this.selectedManagerId) {
+      if (this.users.filter(user => user.userId == this.project.userId).length === 0) {
+        this.project.userId = undefined;
+        this.project.firstName = undefined;
+        this.project.lastName = undefined;
+        this.project.employeeId = undefined;
+      }
+    } else {
+      this.user = this.users.filter(user => user.userId == this.selectedManagerId)[0];
+      this.project.userId = this.user.userId;
+      this.project.firstName = this.user.firstName;
+      this.project.lastName = this.user.lastName;
+      this.project.employeeId = this.user.employeeId;
+      this.errorMessage = undefined;
+    }
+    this.managerName = this.project.employeeId + ' - ' + this.project.firstName + ' , ' + this.project.lastName;
+    this.modalService.dismissAll();
+  }
+
 
 }
