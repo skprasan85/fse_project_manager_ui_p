@@ -42,7 +42,6 @@ export class ProjectComponent implements OnInit {
               private modalService: NgbModal) {
 
       this.todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-
   }
   
   ngOnInit() {

@@ -29,6 +29,9 @@ export class AddTaskComponent implements OnInit {
   user: IUser = new IUser();
   userDisplayName: string;
   errorMessage: string;
+  projectErrorMessage: string;
+  parentErrorMessage: string;
+  userErrorMessage: string;
   selectedProjectId: number;
   selectedParentTaskId: number;
   selectedUserId: number;
@@ -92,12 +95,15 @@ export class AddTaskComponent implements OnInit {
     } 
       else {
 
-        if (!this.task.userId || !this.task.projectId) {
+        if (!this.task.userId || !this.task.projectId || !this.task.parentId) {
           if (!this.task.userId) {
-            this.errorMessage = "User is required";
+            this.userErrorMessage = "User is required";
           }
           if (!this.task.projectId) {
-            this.errorMessage = "Project is required";
+            this.projectErrorMessage = "Project is required";
+          }
+          if (!this.task.parentId){
+            this.parentErrorMessage = "Parent task is required";
           }
           return false;
         }
@@ -124,7 +130,8 @@ export class AddTaskComponent implements OnInit {
           this.appService.addTask(this.task)
             .subscribe(
               save => {
-                  this.router.navigate(['/viewTask']);
+                this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+                this.router.navigate(['/task']));
               }
             );
             console.log('Task Inserted Successfully')
@@ -137,6 +144,9 @@ export class AddTaskComponent implements OnInit {
     this.isParent = !!event.target.checked;
     if (this.isParent) {
       this.errorMessage = undefined;
+      this.projectErrorMessage = undefined;
+      this.parentErrorMessage = undefined;
+      this.userErrorMessage = undefined;
       this.task.projectId = undefined;
       this.task.projectName = undefined;
       this.task.parentId = undefined;
@@ -153,12 +163,12 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  formatLabel(value: number | null) {
-    if (!value) {
-      return 0;
-    }
-    return value;
-  }
+  // formatLabel(value: number | null) {
+  //   if (!value) {
+  //     return 0;
+  //   }
+  //   return value;
+  // }
 
   cancelEdit() {
     this.isEdit = false;
