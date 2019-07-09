@@ -63,9 +63,9 @@
               <div class="form-group row">
                   <div class="col-sm-12 text-center">
                       <button id="reset" type="reset" class="btn btn-warning btn-space float-right" *ngIf='!isEdit'> Reset </button>
-                      <button id="submit" type="submit" class="btn btn-success btn-space float-right" *ngIf='!isEdit'> Add </button>
+                      <button id="submit" type="submit" class="btn btn-success btn-space float-right" [disabled]="projectForm.form.invalid" *ngIf='!isEdit'> Add </button>
                       <button id="cancel" class="btn btn-warning btn-space float-right" *ngIf='isEdit' (click)="cancelEdit()"> Cancel </button>
-                      <button id="update" type="submit" class="btn btn-success btn-space float-right" *ngIf='isEdit'> Update </button>
+                      <button id="update" type="submit" class="btn btn-success btn-space float-right" [disabled]="projectForm.form.invalid" *ngIf='isEdit'> Update </button>
                   </div>
               </div>
 
